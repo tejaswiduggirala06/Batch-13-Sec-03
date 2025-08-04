@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>DocuReserve- "Book Your Health Instantly"</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #f9f9f9;
+      color: #333;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      background: #004080;
+      color: white;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .logo img {
+      height: 50px;
+      width: auto;
+    }
+
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 1.8rem;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    nav a {
+      font-weight: 600;
+      font-size: 1rem;
+      color: white;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #f0c040;
+    }
+
+    .login-btn {
+      margin-left: 30px;
+      padding: 10px 20px;
+      background: #f0c040;
+      color: #004080;
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.3s;
+      white-space: nowrap;
+    }
+
+    .login-btn:hover {
+      background: #d1a933;
+    }
+
+    .hero {
+      background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdyxiSbRzzmzsIp9sIb33avD7uC40pOqlClA&s') no-repeat center center/cover;
+      padding: 100px 20px 80px;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+ /* Phone number moved to top right corner inside hero */
+    .hero-phone {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      z-index: 1;
+      user-select: none;
+      background: rgba(0,64,128,0.8);
+      padding: 8px 14px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(0,64,128,0.7);
+      z-index: 0;
+    }
+
+    .hero-content {
+      position: relative;
+      max-width: 700px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .hero-content h2 {
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+    }
+
+    .booking-form {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .booking-form input,
+    .booking-form select,
+    .booking-form button {
+      padding: 15px 20px;
+      border-radius: 6px;
+      border: none;
+      font-size: 1rem;
+      flex: 1 1 220px;
+      max-width: 280px;
+    }
+
+    .booking-form button {
+      background: #f0c040;
+      color: #004080;
+      font-weight: 700;
+      cursor: pointer;
+      max-width: 150px;
+      transition: background 0.3s;
+    }
+
+    .booking-form button:hover {
+      background: #d1a933;
+    }
+
+    .specialties-section {
+      max-width: 1100px;
+      margin: 50px auto 40px;
+      padding: 0 20px;
+    }
+    .specialties-section h2 {
+      text-align: center;
+      color: #004080;
+      font-weight: 700;
+      margin-bottom: 25px;
+      font-size: 1.8rem;
+    }
+    .specialties-container {
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      gap: 20px;
+      padding-bottom: 10px;
+      scrollbar-width: thin;
+      scrollbar-color: #004080 #ddd;
+    }
+    /* For webkit browsers scrollbar */
+    .specialties-container::-webkit-scrollbar {
+      height: 8px;
+    }
+    .specialties-container::-webkit-scrollbar-track {
+      background: #ddd;
+      border-radius: 4px;
+    }
+    .specialties-container::-webkit-scrollbar-thumb {
+      background-color: #004080;
+      border-radius: 4px;
+    }
+
+    .specialty-card {
+      background: white;
+      flex: 0 0 140px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+      text-align: center;
+      padding: 15px 10px 20px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      user-select: none;
+    }
+    .specialty-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+    }
+    .specialty-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 10px;
+      border: 3px solid #004080;
+    }
+    .specialty-name {
+      font-weight: 600;
+      color: #004080;
+      margin-bottom: 6px;
+      font-size: 1rem;
+      min-height: 30px;
+    }
+    .book-now-btn {
+      font-size: 0.8rem;
+      color: white;
+      background: #f0c040;
+      border: none;
+      border-radius: 15px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.3s;
+      user-select: none;
+    }
+    .book-now-btn:hover {
+      background: #d1a933;
+    }
+
+    .features {
+      max-width: 1100px;
+      margin: 60px auto 40px;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      text-align: center;
+    }
+
+    .feature {
+      background: white;
+      padding: 30px 20px;
+      border-radius: 10px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-icon {
+      margin-bottom: 20px;
+    }
+
+    .feature-icon svg {
+      width: 50px;
+      height: 50px;
+      fill: #004080;
+    }
+
+    .feature h3 {
+      font-weight: 600;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .feature p {
+      color: #666;
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #004080;
+      color: white;
+      text-align: center;
+      padding: 20px 10px;
+      font-size: 0.9rem;
+    }
+
+    @media(max-width: 480px) {
+      .hero-content h2 {
+        font-size: 2rem;
+      }
+      .booking-form {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .booking-form button {
+        max-width: 100%;
+      }
+      nav {
+        gap: 15px;
+      }
+      .login-btn {
+        margin-left: 15px;
+        padding: 8px 16px;
+        font-size: 0.9rem;
+      }
+      .specialties-container {
+        gap: 15px;
+      }
+      .specialty-card {
+        flex: 0 0 120px;
+        padding: 10px 8px 16px;
+      }
+      .specialty-image {
+        width: 65px;
+        height: 65px;
+      }
+      .specialty-name {
+        font-size: 0.9rem;
+        min-height: 28px;
+      }
+      .book-now-btn {
+        padding: 4px 10px;
+        font-size: 0.75rem;
+      }
+    }
+
+    /* Modal styles */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+    .modal {
+      background: white;
+      border-radius: 8px;
+      max-width: 400px;
+      width: 90%;
+      padding: 30px 25px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      position: relative;
+      font-family: 'Poppins', sans-serif;
+    }
+    .modal h2 {
+      margin-top: 0;
+      font-weight: 700;
+      color: #004080;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .modal form {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .modal label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #004080;
+    }
+    .modal input {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: 1.5px solid #004080;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+    .modal input:focus {
+      border-color: #f0c040;
+    }
+    .modal button.submit-btn {
+      background: #f0c040;
+      border: none;
+      padding: 12px;
+      font-weight: 700;
+      color: #004080;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+    .modal button.submit-btn:hover {
+      background: #d1a933;
+    }
+    .modal .close-btn {
+      position: absolute;
+      top: 12px;
+      right: 15px;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #004080;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .toggle-login-signup {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.9rem;
+      color: #004080;
+      user-select: none;
+    }
+    .toggle-login-signup span {
+      color: #f0c040;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">
+      <img src="https://tse4.mm.bing.net/th/id/OIP.o_Ja1JijX61qqvmK5psUQAHaHa?pid=Api&P=0&h=180" alt="DocuReservation Logo" width="190" height="100">
+      <h1>DocuReserve</h1>
+    </div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Doctors</a>
+      <a href="#">Book Lab Test</a>
+      <a href="#">Health Packages</a>
+      <a href="#">Vedio consults</a>
+      <a href="#">Contact</a>
+      <a href="#">About Us</a>
+      <a href="#">Help</a>
+      <button class="login-btn" id="openModalBtn">Login / Sign Up</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+  <div class="hero-phone">📞 +91 8765432123</div>
+    <div class="hero-content">
+      <h2>Book Your Doctor Appointment Easily</h2>
+      <p>Find the best doctors near you and reserve your appointment in just a few clicks.</p>
+      <form class="booking-form">
+        <input type="search" placeholder="Search doctors, specialties..." />
+        <select>
+          <option value="" disabled selected>Select location</option>
+          <option>Hyderabad</option>
+          <option>Chennai</option>
+          <option>Banglore</option>
+          <option>Vijayawada</option>
+          <option>Chittor</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Specialties Section -->
+  <section class="specialties-section" aria-label="Select a Specialty to See Available Doctors">
+    <h2>Select a Specialty to See Available Doctors</h2>
+    <div class="specialties-container">
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="General Practitioner specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/men/11.jpg" alt="Doctor General Practitioner" />
+        <div class="specialty-name">General Practitioner</div>
+        <button class="book-now-btn" aria-label="Book now General Practitioner">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Dental specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/women/21.jpg" alt="Doctor Dental" />
+        <div class="specialty-name">Dental</div>
+        <button class="book-now-btn" aria-label="Book now Dental">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Orthopedics specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/men/31.jpg" alt="Doctor Orthopedics" />
+        <div class="specialty-name">Orthopedics</div>
+        <button class="book-now-btn" aria-label="Book now Orthopedics">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Pediatrics specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/women/41.jpg" alt="Doctor Pediatrics" />
+        <div class="specialty-name">Pediatrics</div>
+        <button class="book-now-btn" aria-label="Book now Pediatrics">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Obstetrics Gynecology specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/women/51.jpg" alt="Doctor Obstetrics Gynecology" />
+        <div class="specialty-name">Obstetrics Gynecology</div>
+        <button class="book-now-btn" aria-label="Book now Obstetrics Gynecology">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Cardiology specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/men/61.jpg" alt="Doctor Cardiology" />
+        <div class="specialty-name">Cardiology</div>
+        <button class="book-now-btn" aria-label="Book now Cardiology">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Psychology specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/men/71.jpg" alt="Doctor Psychology" />
+        <div class="specialty-name">Psychology</div>
+        <button class="book-now-btn" aria-label="Book now Psychology">Book Now</button>
+      </div>
+
+      <div class="specialty-card" tabindex="0" role="button" aria-pressed="false" aria-label="Oncology specialty">
+        <img class="specialty-image" src="https://randomuser.me/api/portraits/med/women/81.jpg" alt="Doctor Oncology" />
+        <div class="specialty-name">Oncology</div>
+        <button class="book-now-btn" aria-label="Book now Oncology">Book Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features" aria-label="Features of DocuReserve">
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4S14.21 4 12 4 8 5.79 8 8s1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+      </div>
+      <h3>Expert Doctors</h3>
+      <p>Connect with highly qualified specialists across various fields.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+      </div>
+      <h3>Easy Booking</h3>
+      <p>Quickly book appointments with a simple and intuitive interface.</p>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM8 17l-3-4 2.25-3 2.75 3.75L16 7l3 4H8z"/></svg>
+      </div>
+      <h3>Verified Reviews</h3>
+      <p>Read honest patient feedback to choose the best doctor for you.</p>
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 DocuReserve. All rights reserved.
+  </footer>
+
+  <!-- Modal for Login/Signup -->
+  <div class="modal-overlay" id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalTitle" tabindex="-1">
+    <div class="modal" role="document">
+      <button class="close-btn" id="closeModalBtn" aria-label="Close login/signup form">&times;</button>
+      <h2 id="modalTitle">Login to DocuReserve</h2>
+      <form id="authForm" aria-describedby="toggleAuthDesc">
+        <label for="emailInput">Email</label>
+        <input id="emailInput" type="email" placeholder="you@example.com" required autocomplete="username" />
+        <label for="passwordInput">Password</label>
+        <input id="passwordInput" type="password" placeholder="Your password" required autocomplete="current-password" />
+        <button type="submit" class="submit-btn" id="submitBtn">Login</button>
+      </form>
+      <div class="toggle-login-signup" id="toggleAuthDesc">
+        Don't have an account? <span id="toggleAuthMode" role="button" tabindex="0">Sign Up</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const openModalBtn = document.getElementById('openModalBtn');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const toggleAuthMode = document.getElementById('toggleAuthMode');
+    const modalTitle = document.getElementById('modalTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const authForm = document.getElementById('authForm');
+    const emailInput = document.getElementById('emailInput');
+    const passwordInput = document.getElementById('passwordInput');
+
+    let isLogin = true;
+
+    openModalBtn.addEventListener('click', () => {
+      modalOverlay.classList.add('active');
+      resetForm();
+      emailInput.focus();
+    });
+
+    closeModalBtn.addEventListener('click', () => {
+      modalOverlay.classList.remove('active');
+    });
+
+    // Close modal on clicking outside the modal content
+    modalOverlay.addEventListener('click', (e) => {
+      if (e.target === modalOverlay) {
+        modalOverlay.classList.remove('active');
+      }
+    });
+
+    toggleAuthMode.addEventListener('click', toggleMode);
+    toggleAuthMode.addEventListener('keypress', (e) => {
+      if(e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggleMode();
+      }
+    });
+
+    function toggleMode() {
+      isLogin = !isLogin;
+      if (isLogin) {
+        modalTitle.textContent = 'Login to DocuReserve';
+        submitBtn.textContent = 'Login';
+        toggleAuthMode.textContent = 'Sign Up';
+        toggleAuthMode.parentElement.firstChild.textContent = "Don't have an account? ";
+        emailInput.setAttribute('autocomplete', 'username');
+        passwordInput.setAttribute('autocomplete', 'current-password');
+      } else {
+        modalTitle.textContent = 'Sign Up for DocuReserve';
+        submitBtn.textContent = 'Sign Up';
+        toggleAuthMode.textContent = 'Login';
+        toggleAuthMode.parentElement.firstChild.textContent = "Already have an account? ";
+        emailInput.setAttribute('autocomplete', 'email');
+        passwordInput.setAttribute('autocomplete', 'new-password');
+      }
+      resetForm();
+      emailInput.focus();
+    }
+
+    authForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = emailInput.value.trim();
+      const password = passwordInput.value.trim();
+
+      if (!email || !password) {
+        alert('Please fill in both fields.');
+        return;
+      }
+
+      if (isLogin) {
+        alert(Logging in with Email: ${email});
+      } else {
+        alert(Signing up with Email: ${email});
+      }
+
+      modalOverlay.classList.remove('active');
+      authForm.reset();
+    });
+
+    function resetForm() {
+      authForm.reset();
+    }
+  </script>
+
+</body>
+</html>
